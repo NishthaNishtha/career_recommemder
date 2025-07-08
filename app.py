@@ -7,6 +7,7 @@ st.title("🚀 AI-Powered Career Recommendation System")
 # Download NLTK stopwords before importing pyresparser
 import nltk
 nltk.download('stopwords')
+nltk.download('punkt')
 
 # Download and load SpaCy model before importing pyresparser
 try:
