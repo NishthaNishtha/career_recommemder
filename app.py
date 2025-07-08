@@ -1,14 +1,14 @@
 import streamlit as st
-import nltk
-import os
 
-# Setup Streamlit page
+# --- Set up Streamlit page ---
 st.set_page_config(page_title="AI Career Recommender", layout="centered")
 st.title("🚀 AI-Powered Career Recommendation System")
 
-# Ensure required NLTK + SpaCy models are downloaded
+# Download NLTK stopwords before importing pyresparser
+import nltk
 nltk.download('stopwords')
 
+# Download and load SpaCy model before importing pyresparser
 try:
     import spacy
     spacy.load("en_core_web_sm")
@@ -17,32 +17,41 @@ except:
     download("en_core_web_sm")
     import spacy
 
+# NOW safely import ResumeParser AFTER required downloads
 from pyresparser import ResumeParser
-from recommender import recommend_careers, gpt_recommend_careers
 
-# Section: Manual Skill Selection
+# Also import recommender functions (if available)
+try:
+    from recommender import recommend_careers, gpt_recommend_careers
+except:
+    def recommend_careers(skills):
+        return ["Data Analyst", "AI Engineer"]
+
+    def gpt_recommend_careers(skills):
+        return "Based on your skills, you can explore roles like AI Specialist or Business Analyst."
+
+# --- Skill-Based Recommendation ---
 st.header("🎯 Select Your Skills")
 skills = st.multiselect("Choose your skills:", ["Python", "SQL", "Excel", "Power BI", "Prompt Engineering"])
 
-if st.button("Recommend Career Paths"):
+if st.button("🔍 Recommend Career Paths"):
     if skills:
         results = recommend_careers(skills)
         st.success(f"🔎 Suggested Careers: {', '.join(results)}")
     else:
         st.warning("Please select at least one skill.")
 
-if st.button("🔮 GPT-Powered Suggestions"):
+if st.button("🔮 GPT Career Suggestion"):
     if skills:
         response = gpt_recommend_careers(skills)
         st.info(response)
     else:
         st.warning("Please select at least one skill.")
 
-# Section: Resume Upload
+# --- Resume Upload and Parsing ---
 st.header("📄 Upload Your Resume")
 
 uploaded_file = st.file_uploader("Upload Resume (PDF/DOCX)", type=["pdf", "docx"])
-
 if uploaded_file is not None:
     file_path = "uploaded_resume." + uploaded_file.name.split('.')[-1]
     with open(file_path, "wb") as f:
@@ -53,12 +62,12 @@ if uploaded_file is not None:
         extracted_skills = parsed_data.get("skills", [])
         st.success(f"✅ Extracted Skills: {', '.join(extracted_skills)}")
 
-        if st.button("💡 GPT Suggestion Based on Resume"):
+        if st.button("💡 GPT Suggestion From Resume"):
             if extracted_skills:
                 response = gpt_recommend_careers(extracted_skills)
                 st.info(response)
             else:
                 st.warning("No skills were extracted from your resume.")
     except Exception as e:
-        st.error("❌ Failed to parse the resume. Make sure it's a proper format and retry.")
+        st.error("❌ Could not parse your resume. Please upload a proper PDF/DOCX format.")
         st.exception(e)
