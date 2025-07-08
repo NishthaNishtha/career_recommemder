@@ -6,7 +6,6 @@ An end-to-end project using Python, AI, and Streamlit to recommend career paths 
 - 🧠 Skill-to-career matching using rule-based or ML methods
 - 📄 Resume parsing for intelligent career mapping
 - 🤖 GPT-powered smart suggestions
-- 📊 Dashboards using Power BI / Plotly
 - 🧾 PDF download of recommendations
 - 🖥️ Easy-to-use Streamlit interface
 
@@ -14,8 +13,6 @@ An end-to-end project using Python, AI, and Streamlit to recommend career paths 
 - Python (Pandas, Scikit-learn, Streamlit)
 - GPT (OpenAI API)
 - ResumeParser
-- Power BI (optional)
-- SQLite/MongoDB (optional)
 
 ## 🛠️ How to Run
 ```bash
