@@ -1,4 +1,20 @@
 import streamlit as st
+import nltk
+import os
+
+# Download stopwords (required for pyresparser)
+nltk.download('stopwords')
+
+# Optional: Download SpaCy model once (only if needed)
+try:
+    import spacy
+    spacy.load("en_core_web_sm")
+except:
+    from spacy.cli import download
+    download("en_core_web_sm")
+    import spacy
+
+#####
 from recommender import recommend_careers
 
 st.title("🚀 AI-Powered Career Recommendation System")
