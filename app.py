@@ -4,18 +4,17 @@ st.set_page_config(page_title="AI Career Recommender", layout="centered")
 st.title("🚀 AI-Powered Career Recommendation System")
 #####
 import nltk
-nltk.download('stopwords')  # download BEFORE pyresparser is used
+nltk.download('stopwords')
 
-import spacy
 try:
+    import spacy
     spacy.load("en_core_web_sm")
 except:
     from spacy.cli import download
     download("en_core_web_sm")
+    import spacy
 
-from pyresparser import ResumeParser  # moved AFTER nltk setup
-import os
-
+from pyresparser import ResumeParser
 
 #####
 from recommender import recommend_careers
