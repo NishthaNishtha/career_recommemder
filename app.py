@@ -1,5 +1,8 @@
 import streamlit as st
-import streamlit as st
+
+st.set_page_config(page_title="AI Career Recommender", layout="centered")
+st.title("🚀 AI-Powered Career Recommendation System")
+#####
 import nltk
 nltk.download('stopwords')  # download BEFORE pyresparser is used
 
